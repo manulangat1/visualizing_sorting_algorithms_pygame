@@ -1,45 +1,45 @@
 import pygame 
+import random 
 pygame.init()
 
-win = pygame.display.set_mode((500,400))
-pygame.display.set_caption("Bubble Sort")
+win = pygame.display.set_mode((800,700))
+pygame.display.set_caption("SELECTION SORT ")
 
+# //initial posn 
 x = 40 
 y = 40 
 
 width = 20 
 
-# height of each bar (data to be sorted) 
-height = [200, 50, 130, 90, 250, 61, 110, 
-            88, 33, 80, 70, 159, 180, 20] 
+height = [random.randint(1,500) for i in range(30)]
 
 run = True 
-
 def show(height):
     for i in range(len(height)):
-        pygame.draw.rect(win,(255,245,78),(x + 30 * i,y,width,height[i]))
+        pygame.draw.rect(win,(90,4,75),(x + 30 * i,y,width,height[i]))
 
 while run:
     execute = False
     pygame.time.delay(10)
-
     keys = pygame.key.get_pressed()
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
     if keys[pygame.K_SPACE]:
-        execute = True
+        execute = True 
     if execute == False:
         win.fill((0,0,0))
         show(height)
         pygame.display.update()
     else:
-        for i in range(len(height) - 1):
-            for j in range(len(height) -i - 1):
-                if height[j] > height[j+1]:
-                    height[j],height[j+1] = height[j+1],height[j]
-                win.fill((0,0,0))
+        for i in range(0,len(height)-1):
+            minIndex = i 
+            for j in range(i+1,len(height)):
+                if height[j] < height[minIndex]:
+                    minIndex =  j 
+            if minIndex != i:
+                height[i],height[minIndex] = height[minIndex],height[i]
                 show(height)
                 pygame.time.delay(50)
                 pygame.display.update()
